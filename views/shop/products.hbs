@@ -1,0 +1,158 @@
+<!-- notification -->
+{{#if successMsg}}
+<div class="toast success" id="myToast" role="alert" aria-live="assertive"
+    aria-atomic="true" data-delay="3700" data-aos="fade-left"
+    data-aos-easing="linear" data-aos-duration="800">
+    <div class="toast-body">
+        <i class="fas fa-check-circle fa-fw fa-lg"></i><span class="message">{{successMsg}}</span>
+    </div>
+</div>
+{{else if errorMsg}}
+<div class="toast error" id="myToast" role="alert" aria-live="assertive"
+    aria-atomic="true" data-delay="3700" data-aos="fade-left"
+    data-aos-easing="linear" data-aos-duration="800">
+    <div class="toast-body">
+        <i class="fas fa-times-circle fa-fw fa-lg"></i><span class="message">{{errorMsg}}</span>
+    </div>
+</div>
+{{/if}}
+<!-- end-notification -->
+
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 offset-lg-2 text-center">
+				<div class="breadcrumb-text">
+					<p>Product details</p>
+					<h1>Single Product</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end breadcrumb section -->
+
+<!-- single product -->
+<div class="single-product mt-150 mb-150">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="product-img-slider-for">
+					{{#each image}}
+					<div class="image-item">
+						<img src="{{this}}" alt="" class="single-product-img-for">
+					</div>
+					{{/each}}
+				</div>
+				<div class="product-img-slider">
+					{{#each image}}
+					<div class="image-item">
+						<img src="{{this}}" alt="" class="single-product-img">
+					</div>
+					{{/each}}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="single-product-content">
+					<h3>{{product.name}}</h3>
+					{{#each product.versions}}
+						{{#if (compare @index "==" 0)}}
+							<p class="single-product-pricing formatMoney" id="changePrice">{{getPrice ../product @key}}</p>
+						{{else}}
+							<p class="single-product-pricing" style="display:none">{{getPrice ../product @key}}</p>
+						{{/if}}
+					{{/each}}
+					<hr>
+					<div class="single-product-form">
+						<form action="/addToCart" method="POST">
+							<input type="hidden" name="productId" value="{{product._id}}">
+							<div class="product-option">
+								<div class="version-option">
+									<fieldset>
+										<legend>
+											<span class="option-name">Version</span>
+										</legend>
+										<ul class="swatch-view swatch-view-button ">
+											{{#each product.versions}}
+											<li class="swatch-view-item versions" id="indexInArr{{@index}}" data-price="{{this.price}}" data-switch-id="switch{{@index}}">
+												<div class="swatch-button">
+													<input type="hidden" class="input_version" name="key_version" disabled value="{{@key}}">
+													<span class="option-title" title="{{@key}}">{{@key}}</span>
+												</div>
+											</li>
+											{{/each}}
+										</ul>
+									</fieldset>
+								</div>
+								
+								<div class="switch-option">
+									<fieldset>
+										<legend>
+											<span class="option-name">Switch</span>
+										</legend>
+										<ul class="swatch-view swatch-view-button">
+											{{#each product.versions}}
+											<div class="switches" id="switch{{@index}}">
+											{{#each this.switches}}
+												{{#if this.status}}
+												<li class="swatch-view-item switch" >
+													<input type="hidden" class="input_switch" name="key_switch" disabled value="{{@key}}">
+													<div class="swatch-button">
+														<span class="option-title">{{@key}}</span>
+													</div>
+												</li>
+												{{/if}}
+											{{/each}}
+											</div>
+											{{/each}}
+										</ul>
+									</fieldset>
+								</div>
+							</div>
+							<div class="number-input-field">
+								<fieldset>
+									<legend>
+										<span class="option-name">Quantity</span>
+									</legend>
+									<input
+                                            type='number' placeholder='0'
+                                            name="quantity"
+                                            min='1' value="1" />
+								</fieldset>
+							</div>
+						<button type="submit" class="cart-btn add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+						</form>
+						<a href="cart.html" class="cart-btn buy-now-btn"><i class="fas fa-truck"></i> Buy now</a>
+					</div>
+					<h4>Share:</h4>
+					<ul class="product-share">
+						<li><a href=""><i class="fab fa-facebook-f"></i></a></li>
+						<li><a href=""><i class="fab fa-twitter"></i></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-150">
+			<div class="col-12">
+				{{{product.description}}}
+			</div>
+		</div>
+		<div class="row product-lists">
+			{{#each moreProduct}}
+			<div class="col-lg-4 col-md-4 col-sm-6 col-6 text-center {{this.category.slug}}">
+				<div class="single-product-item">
+					<div class="product-image">
+						<a href="/products/{{this.category.slug}}/{{this._id}}"><img src="{{getImage this.additional_images}}"
+								alt=""></a>
+					</div>
+					<a href="/products/{{this.category.slug}}/{{this._id}}"><h6 class="text-left">{{this.name}}</h6></a>
+					<p class="text-left product-price formatMoney">{{itemAt ../priceArr @index}}</p>
+
+				</div>
+			</div>
+			{{/each}}
+		</div>
+	</div>
+</div>
+<!-- end single product -->

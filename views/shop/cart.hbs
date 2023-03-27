@@ -1,0 +1,126 @@
+<!-- notification -->
+{{#if successMsg}}
+<div class="toast success" id="myToast" role="alert" aria-live="assertive"
+    aria-atomic="true" data-delay="3700" data-aos="fade-left"
+    data-aos-easing="linear" data-aos-duration="800">
+    <div class="toast-body">
+        <i class="fas fa-check-circle fa-fw fa-lg"></i><span class="message">{{successMsg}}</span>
+    </div>
+</div>
+{{else if errorMsg}}
+<div class="toast error" id="myToast" role="alert" aria-live="assertive"
+    aria-atomic="true" data-delay="3700" data-aos="fade-left"
+    data-aos-easing="linear" data-aos-duration="800">
+    <div class="toast-body">
+        <i class="fas fa-times-circle fa-fw fa-lg"></i><span class="message">{{errorMsg}}</span>
+    </div>
+</div>
+{{/if}}
+<!-- end-notification -->
+
+<!-- breadcrumb-section -->
+<div class='breadcrumb-section breadcrumb-bg-cart'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-lg-8 offset-lg-2 text-center'>
+                <div class='breadcrumb-text'>
+                    <p>Modern and Quality</p>
+                    <h1>Shopping Cart</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
+{{#if cart}}
+<!-- cart -->
+<div class="shopping_cart mt-150 mb-150">
+    <div class="container">
+        <form action="/updateCart" method="POST">
+            <div class="cart__item cart__item--headers small--hide">
+                <div class="cart__item--details">
+                    <div class="cart__item--quantity">quantity</div>
+                    <div class="cart__item--price text-right">total</div>
+                </div>
+            </div>
+            <div>
+                {{#each products}}
+                <div class="cart__item">
+                    <div class="cart__item--image">
+                        <a href="/products/{{this.category.slug}}/{{this._id}}"
+                            class="image-wrap" style="display: block; height: 0;
+                            padding-bottom: 100.0%;">
+                            <img src="{{this.image}}" alt="">
+                        </a>
+                    </div>
+                    <div class="cart__item--details">
+                        <div class="cart__item--name">
+                            <a href="/products/{{this.category.slug}}/{{this._id}}"
+                                class="cart__product-name">{{this.name}}</a>
+                            <div class="cart__variant--meta">{{this.variant}}</div>
+                        </div>
+                        <div class="cart__item--quantity"><input
+                                type='number' placeholder='0'
+                                name="updateQty"
+                                min='0' value="{{this.quantity}}" /></div>
+                        <div class="cart__item--price text-right formatMoney">{{multiplication
+                            this.price this.quantity}}</div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            <div class="cart__footer">
+                <div class="footer">
+                    <div class="footer-item">
+                        <label for="CartNote">Note</label>
+                        {{#if cart.note}}
+                        <textarea placeholder="Take your note here" class="input-full cart-note" name="note"
+                            id="CartNote">{{cart.note}}</textarea>
+                        {{else}}
+                        <textarea placeholder="Take your note here" class="input-full cart-note" name="note"
+                            id="CartNote"></textarea>
+                        {{/if}}
+                    </div>
+                    <div class="footer-item">
+                        <div class="cart__item-sub cart__item-row">
+                            <div class="cart__subtotal">Subtotal</div>
+                            <div class="formatMoney">{{cart.totalCost}}</div>
+                        </div>
+                        <div class="cart__item-row shop-note text-right">
+                            <small>Shipping and discounts calculated at
+                                checkout. NOT included tax and remote area
+                                shipping fee as stated on our Shipping Policy
+                                page. All orders are processed in USD or VND.<br></small>
+                        </div>
+                        <div class='cart-buttons'>
+                            <button type="submit" class='boxed-btn'>Update Cart</button>
+                            <a href='/checkout' class='boxed-btn black'>Check
+                                Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- end cart -->
+{{else}}
+<!-- error section -->
+<div class='full-height-section error-section'>
+    <div class='full-height-tablecell'>
+        <div class='container'>
+            <div class='row'>
+                <div class='col-lg-8 offset-lg-2 text-center'>
+                    <img src="https://res.cloudinary.com/doij577wy/image/upload/v1678896013/Ice_cream_seller-amico_tivabu.png" style="height: 230px; width: 230px;" alt="">
+                    <div class='error-text'>
+                        <h1>Oops! Not Found.</h1>
+                        <p>Your shopping cart is empty!.</p>
+                        <a href='/' class='boxed-btn'>Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end error section -->
+{{/if}}

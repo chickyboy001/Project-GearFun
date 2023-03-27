@@ -1,0 +1,234 @@
+<!-- notification -->
+{{#if successMsg}}
+<div
+    class='toast success'
+    id='myToast'
+    role='alert'
+    aria-live='assertive'
+    aria-atomic='true'
+    data-delay='3700'
+    data-aos='fade-left'
+    data-aos-easing='linear'
+    data-aos-duration='800'>
+    <div class='toast-body'>
+        <i class='fas fa-check-circle fa-fw fa-lg'></i><span
+            class='message'>{{successMsg}}</span>
+    </div>
+</div>
+{{else if errorMsg}}
+<div
+    class='toast error'
+    id='myToast'
+    role='alert'
+    aria-live='assertive'
+    aria-atomic='true'
+    data-delay='3700'
+    data-aos='fade-left'
+    data-aos-easing='linear'
+    data-aos-duration='800'>
+    <div class='toast-body'>
+        <i class='fas fa-times-circle fa-fw fa-lg'></i><span
+            class='message'>{{errorMsg}}</span>
+    </div>
+</div>
+{{/if}}
+<!-- end-notification -->
+
+<!-- breadcrumb-section -->
+<div class='breadcrumb-section breadcrumb-bg-account'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-lg-8 offset-lg-2 text-center'>
+                <div class='breadcrumb-text'>
+                    <p>Modern and Quality</p>
+                    <h1>Your Profile</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
+
+<!-- start profile section -->
+<div class='profile-section mt-150 mb-150'>
+    <div class='container'>
+        <div class='row justify-content-between'>
+            <div class='col-lg-2'>
+                <div class='tab'>
+                    <button
+                        class='tablinks'
+                        onclick="changeTab(event, 'Profile')"
+                        id='defaultOpen'>Profile</button>
+                    <button
+                        class='tablinks'
+                        onclick="changeTab(event, 'Address')">Address</button>
+                    <button
+                        class='tablinks'
+                        onclick="changeTab(event, 'Order')">Order</button>
+                    <button
+                        class='tablinks'
+                        onclick="changeTab(event, 'Tokyo')">Log out</button>
+                </div>
+            </div>
+            <div class='col-lg-10'>
+                <div class='tab-content'>
+                    <div id='Profile' class='tabcontent'>
+                        <h2>Profile</h2>
+                        <div class='profile'>
+                            <div class='profile-content text-center'>
+                                <h4>Full name</h4>
+                                <span>{{currentUser.firstName}} {{currentUser.lastName}}</span>
+                            </div>
+                            <div class='profile-content text-center'>
+                                <h4>Email</h4>
+                                <span>{{currentUser.email}}</span>
+                            </div>
+                            <div class='profile-content text-center'>
+                                <h4>Order delivered</h4>
+                                <span>0</span>
+                            </div>
+                            <div class='profile-content text-center'>
+                                <h4>Spent</h4>
+                                <span class='formatMoney'>0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id='Address' class='tabcontent'>
+                        <h2>Address</h2>
+                        <div class="addAddress">
+                            <div class="d-flex justify-content-end"><button onclick="openFrom(event)" class="showForm">Add Address</button></div>
+                            <form action="/user/addAddress" style="display: none;" method="post" id="addAddress">
+                                <div class="billing-address-form">
+                                    <p><select class="selectCountry"
+                                            name="country"
+                                            onmouseover="this.size=10;"
+                                            onmouseout="this.size=1;"
+                                            style="max-height: 160px;
+                                            overflow: auto;" required>
+                                            <option value="">Country/Region</option>
+                                            <optgroup label="Asia Pacific">
+                                                <option value="Vietnam">Vietnam</option>
+                                                <option value="Russia">Russia</option>
+                                                <option value="Singapore">Singapore</option>
+                                                <option value="China">China</option>
+                                                <option value="Taiwan">Taiwan</option>
+                                                <option value="Korea">Korea</option>
+                                                <option value="Australia">Australia</option>
+                                            </optgroup>
+                                            <optgroup label="North America">
+                                                <option value="Canada">Canada</option>
+                                                <option value="United State">United
+                                                    State</option>
+                                                <option value="Mexico">Mexico</option>
+                                            </optgroup>
+                                            <optgroup label="Europe">
+                                                <option value="United Kingdom">United
+                                                    Kingdom</option>
+                                                <option value="France">France</option>
+                                                <option value="Italy">Italy</option>
+                                                <option value="Spain">Spain</option>
+                                            </optgroup>
+                                        </select></p>
+                                    <p class="twoInput"><input type="text"
+                                            placeholder="First name"
+                                            name="firstName" required>
+                                        <input type="text" placeholder="Last name" name="lastName"></p>
+                                    <p><input type="text" placeholder="Address"
+                                            name="address1" required></p>
+                                    <p><input type="text"
+                                            placeholder="Apartment, suite, etc. (optional)"
+                                            name="address2"></p>
+                                    <p class="twoInput"><input type="text"
+                                            placeholder="City"
+                                            name="city">
+                                        <input type="text" placeholder="Postal code" name="postal"></p>
+                                    <p><input class="phoneNumber" type="tel"
+                                            placeholder="Phone"
+                                            name="phone" required></p>
+                                    <div class="d-flex justify-content-start">
+                                    <button type="submit" class="addAddress">Add Address</button>
+                                </div>
+                                </div>
+                            </form>
+                            {{#each currentUser.address}}
+                                <div class="userAddress">
+                                    {{#if this.default}}
+                                    <p class="h4">default</p>
+                                    {{/if}}
+                                    <p>{{this.firstName}} {{this.lastName}}<br>
+                                    {{this.address1}}<br>
+                                    {{this.city}}<br>
+                                    {{this.country}}
+                                    </p>
+                                    <p style="margin: -10px 0 40px">
+                                        <button type="button">Edit</button>
+                                        <button type="button">Delete</button>
+                                    </p>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+
+                    <div id='Order' class='tabcontent'>
+                        <h2>Order</h2>
+                        <div class='order'>
+                            {{#each orders}}
+                            <div class='order-item'>
+                                <div class="order__header">
+
+                                </div>
+                                <div class="order__body">
+                                    {{#each this.cart.items}}
+                                    <div class="cart__item">
+                                        <div class="cart__item--image">
+                                            <a
+                                                href="/products/{{this.category.slug}}/{{this._id}}"
+                                                class="image-wrap"
+                                                style="display: block; height:
+                                                0;
+                                                padding-bottom: 100.0%;">
+                                                <img src="{{this.image}}"
+                                                    alt="">
+                                            </a>
+                                        </div>
+                                        <div class="cart__item--details">
+                                            <div class="cart__item--name">
+                                                <a
+                                                    href="/products/{{this.category.slug}}/{{this._id}}"
+                                                    class="cart__product-name">{{this.prodName}}</a>
+                                                <div
+                                                    class="cart__variant--meta">{{this.version}}
+                                                    / {{this.switch}}</div>
+                                            </div>
+                                            <div class="cart__item--quantity
+                                                text-center">x{{this.qty}}</div>
+                                            <div class="cart__item--price
+                                                text-right formatMoney">{{multiplication
+                                                this.price this.qty}}</div>
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                </div>
+                                <div class="order__footer">
+                                    <div class="order__footer--totalPrice">
+                                        <div class="order__Total">Total</div>
+                                        <div class="formatMoney">{{this.cart.totalCost}}</div>
+                                    </div>
+                                    <div class="order__footer--repurchase">
+                                        <a
+                                            href='/user/orderDetails/{{this._id}}'
+                                            class='boxed-btn black'>View details</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end profile section -->

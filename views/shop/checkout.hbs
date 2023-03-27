@@ -1,0 +1,203 @@
+{{#if errorMsg}}
+<div class="toast error" id="myToast" role="alert" aria-live="assertive"
+	aria-atomic="true" data-delay="3700" data-aos="fade-left"
+	data-aos-easing="linear" data-aos-duration="800">
+	<div class="toast-body">
+		<i class="fas fa-times-circle fa-fw fa-lg"></i><span class="message">{{errorMsg}}</span>
+	</div>
+</div>
+{{/if}}
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg-checkout">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 offset-lg-2 text-center">
+				<div class="breadcrumb-text">
+					<p>Modern and Quality</p>
+					<h1>Check out</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end breadcrumb section -->
+
+<!-- check out section -->
+<div class="checkout-section mt-150 mb-150">
+	<div class="container">
+		<form class="placeOrder" action="/checkout" method="post">
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="checkout-accordion-wrap">
+						<div class="accordion" id="accordionExample">
+							<div class="card single-accordion">
+								<div class="card-header" id="headingOne">
+									<h5 class="mb-0">
+										<button class="btn btn-link" type="button" data-toggle="collapse"
+											aria-expanded="true"
+											aria-controls="collapseOne">
+											Shipping Address
+										</button>
+									</h5>
+								</div>
+
+								<div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+									data-parent="#accordionExample">
+									<div class="card-body">
+										<div class="billing-address-form">
+
+											{{#if currentUser}}
+											<label for="savedAddress">Saved address</label>
+											<p><select class="selectAddress" id="savedAddress">
+													<option value>New address</option>
+													{{#each currentUser.address}}
+													<option {{#if this.default}}selected{{/if}}
+														data-properties="{{convertToJSON this}}" value="">{{this.address1}},
+														{{this.city}}, {{this.country}} {{this.firstName}}
+														{{this.lastName}}</option>
+													{{/each}}
+												</select></p>
+											{{/if}}
+
+											{{#unless currentUser}}
+											<label for="email">Email</label>
+											<p><input id="email" type="email" placeholder="Email" name="email" required></p>
+											{{/unless}}
+
+											<label for="selectCountry">Country/Region</label>
+											<p><select class="selectCountry" id="selectCountry" name="country"
+													onmouseover="this.size=10;" onmouseout="this.size=1;"
+													style="max-height: 160px;
+													overflow: auto;" required>
+													{{#if defaultAddress}}
+													<option value="{{defaultAddress.country}}">{{defaultAddress.country}}</option>
+													{{/if}}
+													<optgroup label="Asia Pacific">
+														<option value="Vietnam">Vietnam</option>
+														<option value="Russia">Russia</option>
+														<option value="Singapore">Singapore</option>
+														<option value="China">China</option>
+														<option value="Taiwan">Taiwan</option>
+														<option value="Korea">Korea</option>
+														<option value="Australia">Australia</option>
+													</optgroup>
+													<optgroup label="North America">
+														<option value="Canada">Canada</option>
+														<option value="United State">United State</option>
+														<option value="Mexico">Mexico</option>
+													</optgroup>
+													<optgroup label="Europe">
+														<option value="United Kingdom">United Kingdom</option>
+														<option value="France">France</option>
+														<option value="Italy">Italy</option>
+														<option value="Spain">Spain</option>
+													</optgroup>
+												</select>
+											</p>
+
+											<div class="d-flex justify-content-between"><label class="text-left" style="width: 49%;" for="firstName">First name</label>
+											<label class="text-left" style="width: 49%;" for="lastName">Last name</label></div>
+											<p class="twoInput"><input type="text" placeholder="First name"
+													name="firstName" id="firstName" value="{{defaultAddress.firstName}}" required>
+												<input type="text" placeholder="Last name" id="lastName" name="lastName"
+													value="{{defaultAddress.lastName}}" required></p>
+
+											<label for="address">Address</label>
+											<p><input type="text" placeholder="Address" id="address" name="address"
+													value="{{defaultAddress.address1}}" required></p>
+
+											<label for="additionalInfor">Additional info</label>
+											<p><input type="text" placeholder="Apartment, suite, etc. (optional)"
+													name="additionalInfor" id="additionalInfor" value="{{defaultAddress.address2}}"></p>
+
+											<div class="d-flex justify-content-between"><label class="text-left" style="width: 49%;" for="city">City</label>
+											<label class="text-left" style="width: 49%;" for="postal">Postal code</label></div>
+											<p class="twoInput"><input type="text" id="city" placeholder="City"
+													name="city" value="{{defaultAddress.city}}" required>
+												<input type="text" id="postal" placeholder="Postal code"
+													value="{{defaultAddress.postalCode}}" name="postal"></p>
+
+											<label for="phoneNumber">Phone</label>
+											<p><input class="phoneNumber" type="tel" placeholder="Phone"
+													name="phone" id="phoneNumber" value="{{defaultAddress.phone}}" required></p>
+
+											<label for="bill">Note</label>
+											<p><textarea name="note" id="bill"  cols="30" rows="10"
+													placeholder="Note for shop">{{cart.note}}</textarea></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-4">
+					<div class="order-details-wrap">
+						<table class="order-details">
+							<thead>
+								<tr>
+									<th>Your order Details</th>
+									<th>Price</th>
+								</tr>
+							</thead>
+							<tbody class="order-details-body">
+								<tr>
+									<td><strong>Product</strong></td>
+									<td>Total</td>
+								</tr>
+								{{#each products}}
+								<tr>
+									<td><div>{{this.name}}</div>
+									<div class="variant">{{this.variant}}  x{{this.quantity}}</div></td>
+									<td class="formatMoney">{{multiplication
+										this.price this.quantity}}</td>
+								</tr>
+								{{/each}}
+
+							</tbody>
+							<tbody class="checkout-details">
+								<tr>
+									<td><strong>Subtotal</strong></td>
+									<td class="formatMoney">{{cart.totalCost}}</td>
+								</tr>
+								<tr>
+									<td><strong>Shipping</strong></td>
+									<td>$0</td>
+								</tr>
+								<tr>
+									<td><strong>Total</strong></td>
+									<td class="formatMoney">{{cart.totalCost}}</td>
+								</tr>
+							</tbody>
+						</table>
+						<a href="#modal-dialog" class="boxed-btn modal-toggle"
+							data-href="/checkout" data-toggle="modal">Place Order</a>
+					</div>
+				</div>
+			</div>
+			<!-- Modal -->
+			<div id="modal-dialog" class="modal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="staticBackdropLabel">Confirm order</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<p>Please check the information carefully before ordering. Confirm?</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Confirm</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- end check out section -->

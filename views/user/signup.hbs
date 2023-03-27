@@ -1,0 +1,58 @@
+<!-- notification -->
+{{#if successMsg}}
+<div class="toast success" id="myToast" role="alert" aria-live="assertive"
+    aria-atomic="true" data-delay="3700" data-aos="fade-left"
+    data-aos-easing="linear" data-aos-duration="800">
+    <div class="toast-body">
+        <i class="fas fa-check-circle fa-fw fa-lg"></i><span class="message">{{successMsg}}</span>
+    </div>
+</div>
+{{else if errorMsg}}
+<div class="toast error" id="myToast" role="alert" aria-live="assertive"
+    aria-atomic="true" data-delay="3700" data-aos="fade-left"
+    data-aos-easing="linear" data-aos-duration="800">
+    <div class="toast-body">
+        <i class="fas fa-times-circle fa-fw fa-lg"></i><span class="message">{{errorMsg}}</span>
+    </div>
+</div>
+{{/if}}
+<!-- end-notification -->
+
+<!-- breadcrumb-section -->
+<div class='breadcrumb-section breadcrumb-bg'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-lg-8 offset-lg-2 text-center'>
+                <div class='breadcrumb-text'>
+                    <p>Modern and Quality</p>
+                    <h1>Sign Up</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
+
+<!-- start login section -->
+<div class="login-section mt-150 mb-150">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-4 col-lg-5 col-md-7 col-sm-9 col-10 login-form">
+                <form action="/user/signup" method="post">
+                    <label for="firstName">First name</label>
+                    <input type="text" name="firstName" id="firstName">
+                    <label for="lastName">Last name</label>
+                    <input type="text" name="lastName" id="lastName">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password">
+                    <label for="password2">Verify Password</label>
+                    <input type="password" name="password2" id="password2">
+                    <button class="text-center" type="submit">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end login section -->

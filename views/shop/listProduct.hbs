@@ -1,0 +1,105 @@
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg-listProduct">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 offset-lg-2 text-center">
+				<div class="breadcrumb-text">
+					<p>List of Products</p>
+					<h1>List Product</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end breadcrumb section -->
+
+{{#if products}}
+<!-- products -->
+<div class="product-section mt-150 mb-150">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="product-filters">
+					<ul>
+						<li class="active" data-filter="*">All</li>
+						{{#each category}}
+						<li data-filter=".{{this.slug}}">{{this.title}}</li>
+						{{/each}}
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="row product-lists">
+			{{#each products}}
+			<div class="col-lg-4 col-md-4 col-sm-6 col-6 text-center {{this.category.slug}}">
+				<div class="single-product-item">
+					<div class="product-image">
+						<a href="/products/{{this.category.slug}}/{{this._id}}"><img src="{{getImage this.additional_images}}"
+								alt=""></a>
+					</div>
+					<a href="/products/{{this.category.slug}}/{{this._id}}"><h6 class="text-left">{{this.name}}</h6></a>
+					<p class="text-left product-price formatMoney">{{itemAt ../priceArr @index}}</p>
+
+				</div>
+			</div>
+			{{/each}}
+		</div>
+
+		{{#if (compare pages '>=' 0)}}
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<div class="pagination-wrap">
+					<ul class="">
+						{{!-- if current equal 1 not show First button --}}
+						{{#if (compare current '==' 1)}}
+						<li class="disabled"><a class="">First</a></li>
+						{{else}}
+						<li>
+							<a class="" href="{{home}}page=1">First</a>
+						</li>
+						{{/if}}
+
+						{{#if (compare (iFromCurrent current) '!=' 1)}}
+						<li class="disabled"><a class="">...</a></li>
+						{{/if}}
+
+						{{#for (iFromCurrent current) current pages home}}
+						{{/for}}
+
+						{{#if (compare current '==' pages)}}
+						<li class="disabled"><a class="">Last</a></li>
+						{{else}}
+						<li>
+							<a class="" href="{{home}}page={{pages}}">Last</a>
+						</li>
+						{{/if}}
+
+					</ul>
+				</div>
+			</div>
+		</div>
+		{{/if}}
+	</div>
+</div>
+<!-- end products -->
+{{else}}
+<!-- error section -->
+<div class='full-height-section error-section'>
+    <div class='full-height-tablecell'>
+        <div class='container'>
+            <div class='row'>
+                <div class='col-lg-8 offset-lg-2 text-center'>
+                    <img src="https://res.cloudinary.com/doij577wy/image/upload/v1678896013/Ice_cream_seller-amico_tivabu.png" style="height: 230px; width: 230px;" alt="">
+                    <div class='error-text'>
+                        <h1>Oops! Not Found.</h1>
+                        <p>No matching products found!.</p>
+                        <a href='/' class='boxed-btn'>Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end error section -->
+{{/if}}

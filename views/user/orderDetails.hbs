@@ -1,0 +1,142 @@
+<!-- breadcrumb-section -->
+<div class='breadcrumb-section breadcrumb-bg-orderDetails'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-lg-8 offset-lg-2 text-center'>
+                <div class='breadcrumb-text'>
+                    <p>Modern and Quality</p>
+                    <h1>Order Details</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
+
+
+<div class="order__details--section mt-150 mb-150">
+    <div class="container">
+        <div class="order__details--card">
+            <div class="card--header">
+                <h4 class="mb-0">Thanks for your
+                    Order,<span class="change-color"> {{order.customer.name}}</span>
+                    !</h4>
+            </div>
+            <div class="order__details--body">
+                <div class="row justify-content-between mb-3">
+                    <div class="col-auto"> <h6 class="color-1 mb-0
+                            change-color">Receipt</h6> </div>
+                    <div class="col-auto "> <small>Receipt Voucher : none</small>
+                    </div>
+                </div>
+                <div class="order__body">
+                    {{#each order.cart.items}}
+                    <div class="cart__item">
+                        <div class="cart__item--image">
+                            <a
+                                href="/products/{{this.category.slug}}/{{this._id}}"
+                                class="image-wrap" style="display: block;
+                                height: 0;
+                                padding-bottom: 100.0%;">
+                                <img src="{{this.image}}" alt="">
+                            </a>
+                        </div>
+                        <div class="cart__item--details">
+                            <div class="cart__item--name">
+                                <a
+                                    href="/products/{{this.category.slug}}/{{this._id}}"
+                                    class="cart__product-name">{{this.prodName}}</a>
+                                <div class="cart__variant--meta">{{this.version}}
+                                    / {{this.switch}}</div>
+                            </div>
+                            <div class="cart__item--quantity text-center">x{{this.qty}}</div>
+                            <div class="cart__item--price text-center
+                                formatMoney">{{multiplication
+                                this.price this.qty}}</div>
+                        </div>
+                    </div>
+                    {{/each}}
+                    <div class="row px-3">
+            {{#if (compare order.status "==" "pending")}}
+            <div class="col order-status">
+                <ul id="progressbar" class="text-center">
+                <li class="active step0"><p>Pending</p></li>
+                <li class="step0"><p>Processing</p></li>
+                <li class="step0"><p>Shipping</p></li>
+                <li class="step0"><p>Complete</p></li>
+            </ul>
+            </div>
+            {{/if}}
+            {{#if (compare order.status "==" "processing")}}
+            <div class="col order-status">
+                <ul id="progressbar" class="text-center">
+                <li class="active step0"><p>Pending</p></li>
+                <li class="active step0"><p>Processing</p></li>
+                <li class="step0"><p>Shipping</p></li>
+                <li class="step0"><p>Complete</p></li>
+            </ul>
+            </div>
+            {{/if}}
+            {{#if (compare order.status "==" "shipping")}}
+            <div class="col order-status">
+                <ul id="progressbar" class="text-center">
+                <li class="active step0"><p>Pending</p></li>
+                <li class="active step0"><p>Processing</p></li>
+                <li class="active step0"><p>Shipping</p></li>
+                <li class="step0"><p>Complete</p></li>
+            </ul>
+            </div>
+            {{/if}}
+            {{#if (compare order.status "==" "completed")}}
+            <div class="col order-status">
+                <ul id="progressbar" class="text-center">
+                <li class="active step0"><p>Pending</p></li>
+                <li class="active step0"><p>Processing</p></li>
+                <li class="active step0"><p>Shipping</p></li>
+                <li class="active step0"><p>Complete</p></li>
+            </ul>
+            </div>
+            {{/if}}
+            {{#if (compare order.status "==" "cancelled")}}
+            <div class="col order-status">
+                <ul id="progressbar" class="text-center">
+                <li class="active step0"><p>Pending</p></li>
+                <li class="step0"><p>Processing</p></li>
+                <li class="step0"><p>Shipping</p></li>
+                <li class="step0"><p>Complete</p></li>
+            </ul>
+            </div>
+            {{/if}}
+        </div>
+                </div>
+                <div class="d-flex justify-content-start py-4 px">
+                    <div class="order--details">
+                        <h5>Order details</h5>
+                        <p>Invoice number: </p>
+                        <p>Create at: {{formatDate order.createdAt}}</p>
+                        <p>Note: {{order.note}}</p>
+                        <h5 class="mt-2">Shipping address</h5>
+                        <p>Receiver: {{order.customer.name}}</p>
+                        <p>Email: {{order.customer.email}}</p>
+                        <p>Phone: {{order.customer.phoneNumber}}</p>
+                        <p>Address: {{order.customer.address}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="order--footer">
+                <div class="row justify-content-end">
+                    <div class="order__details--title mx-3">
+                    <p>Total price</p>
+                    <p>Shipping fee</p>
+                    <h4>TOTAL PAID</h4>
+                </div>
+                <div class="order__details--content mx-3">
+                    <p class="formatMoney">{{order.cart.totalCost}}</p>
+                    <p class="formatMoney">0</p>
+                    <h4 class="formatMoney">{{order.cart.totalCost}}</h4>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
