@@ -289,7 +289,6 @@ switchItems.forEach(function (switchItem) {
         inputSwitch.disabled = false;
     });
 });
-
 // show toast
 $(document).ready(function () {
     $('.toast').toast('show');
