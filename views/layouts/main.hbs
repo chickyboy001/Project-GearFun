@@ -76,11 +76,10 @@
                                 </li>
                                 <li><a href="#">Keyboards</a>
                                     <ul class="sub-menu">
-                                        <li><a href="#">Akko</a></li>
-                                        <li><a href="#">Keycool</a></li>
-                                        <li><a href="#">Edra</a></li>
-                                        <li><a href="#">FL Esport</a></li>
-                                        <li><a href="#">Royal Kludge</a></li>
+                                        {{#each categories}}
+                                        <li><a href="/product/{{this.slug}}">{{this.title}}</a></li>
+                                        {{/each}}
+                                        
                                     </ul>
                                 </li>
                                 <li><a href="#">Kits</a>
@@ -136,7 +135,7 @@
                         <div class="search-bar-tablecell">
                         <h3>Search For:</h3>
                         <form action="/products/search" method="GET">
-                        <input type="search" placeholder="Keywords" name="search" />
+                        <input type="search" placeholder="Keywords" autofocus name="search" />
 
                         </form>
                         </div>

@@ -395,8 +395,11 @@ export async function placeOrder(req, res, next) {
                 console.log(err);
                 return res.redirect('/checkout');
             }
-            await cart.save();
-            await Cart.findByIdAndDelete(cart._id);
+            if (req.user) {
+                await cart.save();
+                await Cart.findByIdAndDelete(cart._id);
+            }
+            
             req.session.cart = null;
         });
 

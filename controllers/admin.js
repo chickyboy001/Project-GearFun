@@ -38,7 +38,7 @@ export async function updateDescription(req, res) {
     }
 }
 
-export async function createCategory(req, res, next) {
+export async function createCategory(req, res) {
     try {
         const category = new Category({
             title: req.body.title,
@@ -61,7 +61,7 @@ export async function createCategory(req, res, next) {
     }
 }
 
-export async function createProduct(req, res, next) {
+export async function createProduct(req, res) {
     try {
         const {
             name,
@@ -108,7 +108,7 @@ export async function createProduct(req, res, next) {
     }
 }
 
-export async function testForm(req, res, next) {
+export async function testForm(req, res) {
     try {
         const {
             name,
